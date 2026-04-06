@@ -1,101 +1,602 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  Bus,
+  Monitor,
+  FlaskConical,
+  ShieldCheck,
+  MessageSquare,
+  Cctv,
+  BookOpen,
+  Users,
+  Trophy,
+  Clock,
+  ArrowRight,
+  Star,
+  ChevronRight,
+} from "lucide-react";
+import {
+  ScrollReveal,
+  AnimatedCounter,
+  SectionHeading,
+} from "@/components/shared";
+import { SCHOOL_INFO } from "@/lib/utils";
+
+// ─── Hero ────────────────────────────────────
+function Hero() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <section className="relative h-[90vh] min-h-[600px] max-h-[900px] bg-navy-950 overflow-hidden">
+      {/* Background image with slow zoom */}
+      <div className="absolute inset-0 animate-slow-zoom">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('/images/campus/triple-m-building.png')",
+          }}
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      </div>
+      <div className="overlay-gradient" />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Content */}
+      <div className="relative h-full container-wide flex flex-col justify-end pb-16 md:pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <span className="text-label text-gold-300 mb-4 block">
+            Est. 2012 · Hoshiarpur, Punjab
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="font-serif text-4xl md:text-display-lg lg:text-display-xl text-white max-w-4xl"
+        >
+          Where discipline
+          <br />
+          meets distinction.
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+          className="mt-6 text-base md:text-lg text-white/60 max-w-xl leading-relaxed"
+        >
+          Triple M Public School has built a tradition of academic rigour,
+          experienced faculty, and an environment that prepares students
+          for what comes next.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1 }}
+          className="flex flex-wrap gap-4 mt-10"
+        >
+          <Link href="/admissions" className="btn-gold">
+            Begin Application
+            <ArrowRight size={16} className="ml-2" />
+          </Link>
+          <Link href="/about" className="btn-outline border-white/30 text-white hover:bg-white/10 hover:border-white/50">
+            Explore the School
+          </Link>
+        </motion.div>
+
+        {/* Stats Row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.3 }}
+          className="mt-16 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12"
+        >
+          {[
+            { value: 13, suffix: "+", label: "Years" },
+            { value: 1000, suffix: "+", label: "Students Taught" },
+            { value: 50, suffix: "+", label: "Faculty Members" },
+            { value: 16, suffix: "", label: "Transport Routes" },
+          ].map((stat) => (
+            <div key={stat.label}>
+              <span className="font-serif text-3xl md:text-4xl text-white block">
+                <AnimatedCounter
+                  end={stat.value}
+                  suffix={stat.suffix}
+                  duration={2.5}
+                />
+              </span>
+              <span className="text-xs text-white/40 uppercase tracking-widest mt-1 block font-sans">
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Admissions Ticker ───────────────────────
+function AdmissionsTicker() {
+  const items = Array(6).fill(
+    "Admissions Open 2025–26  ·  Classes VI to XII  ·  Call 9888299600"
+  );
+  return (
+    <div className="bg-gold-400 text-navy-900 py-3 overflow-hidden">
+      <div className="marquee-track whitespace-nowrap">
+        {items.map((text, i) => (
+          <span
+            key={i}
+            className="text-sm font-sans font-bold uppercase tracking-[0.15em] mx-8"
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            {text}
+          </span>
+        ))}
+      </div>
     </div>
+  );
+}
+
+// ─── Welcome Section ─────────────────────────
+function Welcome() {
+  return (
+    <section className="section bg-white">
+      <div className="container-wide">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <ScrollReveal>
+            <div>
+              <SectionHeading
+                label="Welcome"
+                title="A school that takes itself seriously."
+                description="Triple M Public School was founded in 2012 with a clear purpose: provide Hoshiarpur with a school that combines discipline, strong academics, and faculty who have actually spent decades in the classroom."
+              />
+              <div className="space-y-4 text-navy-600 text-[15px] leading-relaxed">
+                <p>
+                  We are not a franchise. We are not a coaching centre pretending
+                  to be a school. We are a properly equipped institution with
+                  science labs, a library, smart classrooms, and transport
+                  covering 16 routes across the district — because access matters.
+                </p>
+                <p>
+                  Our students sit for state board examinations and the results
+                  speak clearly. When the faculty is experienced and the
+                  infrastructure is real, outcomes follow.
+                </p>
+              </div>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 mt-8 text-sm font-semibold text-navy-800 uppercase tracking-[0.1em] group"
+              >
+                Read more about us
+                <ChevronRight
+                  size={14}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
+              </Link>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.2}>
+            <div className="relative">
+              <div className="aspect-[4/5] overflow-hidden">
+                <img
+                  src="/images/campus/triple-m-building.png"
+                  alt="Students in classroom"
+                  className="img-editorial"
+                />
+              </div>
+              {/* Accent block */}
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gold-300 -z-10 hidden md:block" />
+              <div className="absolute -top-6 -right-6 w-24 h-24 bg-navy-800 -z-10 hidden md:block" />
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Facilities Grid ─────────────────────────
+const facilities = [
+  {
+    icon: Bus,
+    title: "Transport Network",
+    desc: "16 bus routes covering Talwara, Mukerian, Dasuya, Tanda, Phagwara, and more. Door-step pickup across the district.",
+  },
+  {
+    icon: Monitor,
+    title: "Smart Classrooms",
+    desc: "Digital boards and AV-equipped rooms. Concepts taught with visual aids, not just chalk and talk.",
+  },
+  {
+    icon: FlaskConical,
+    title: "Science Laboratories",
+    desc: "Fully equipped Physics, Chemistry, and Biology labs. Students do the experiments — not just read about them.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Secure Campus",
+    desc: "Controlled entry, trained staff, and clear safety protocols. Parents can be at ease.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Parent SMS Alerts",
+    desc: "Attendance, results, and announcements sent directly to parents via SMS. No information gaps.",
+  },
+  {
+    icon: Cctv,
+    title: "CCTV Surveillance",
+    desc: "All classrooms and corridors covered. Full visibility, full accountability.",
+  },
+];
+
+function FacilitiesGrid() {
+  return (
+    <section className="section bg-cream">
+      <div className="container-wide">
+        <ScrollReveal>
+          <SectionHeading
+            label="Facilities"
+            title="Built for learning, not for show."
+            description="Every facility serves a purpose. No decorative swimming pools or unused auditoriums — just what students and teachers actually need."
+            align="center"
+          />
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-200">
+          {facilities.map((item, i) => (
+            <ScrollReveal key={item.title} delay={i * 0.08}>
+              <div className="bg-white p-8 md:p-10 h-full group hover:bg-navy-800 transition-colors duration-500">
+                <item.icon
+                  size={28}
+                  className="text-gold-400 mb-6 group-hover:text-gold-300 transition-colors"
+                  strokeWidth={1.5}
+                />
+                <h3 className="font-serif text-xl text-navy-800 mb-3 group-hover:text-white transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-navy-500 leading-relaxed group-hover:text-white/60 transition-colors">
+                  {item.desc}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal>
+          <div className="text-center mt-12">
+            <Link href="/facilities" className="btn-outline">
+              View All Facilities
+            </Link>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+// ─── Why Choose Us ───────────────────────────
+function WhyChooseUs() {
+  return (
+    <section className="relative section bg-navy-800 overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(45deg, #fff 25%, transparent 25%), linear-gradient(-45deg, #fff 25%, transparent 25%)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
+      <div className="container-wide relative">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <ScrollReveal>
+            <div>
+              <SectionHeading
+                label="Why Triple M"
+                title="The numbers, plainly."
+                dark
+              />
+              <div className="grid grid-cols-2 gap-8 mt-2">
+                {[
+                  {
+                    icon: Users,
+                    value: 50,
+                    suffix: "+",
+                    label: "Experienced Faculty",
+                  },
+                  {
+                    icon: Trophy,
+                    value: 95,
+                    suffix: "%",
+                    label: "Pass Rate",
+                  },
+                  {
+                    icon: BookOpen,
+                    value: 5,
+                    suffix: "",
+                    label: "Academic Streams",
+                  },
+                  {
+                    icon: Clock,
+                    value: 13,
+                    suffix: "+",
+                    label: "Years Running",
+                  },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="border-t border-white/10 pt-6"
+                  >
+                    <stat.icon
+                      size={20}
+                      className="text-gold-400 mb-3"
+                      strokeWidth={1.5}
+                    />
+                    <span className="font-serif text-3xl text-white block">
+                      <AnimatedCounter
+                        end={stat.value}
+                        suffix={stat.suffix}
+                        duration={2}
+                      />
+                    </span>
+                    <span className="text-xs text-white/40 uppercase tracking-widest mt-1 block">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.15}>
+            <div className="space-y-6">
+              {[
+                {
+                  title: "Faculty who have been at this for decades",
+                  text: "Prof. Manoj Kapoor, Prof. S.K. Sharma, Prof. Jarnail Singh, Prof. O.P. Sharma — these are teachers whose track record is their introduction. They don't need a bio; their students speak for them.",
+                },
+                {
+                  title: "Infrastructure that works",
+                  text: "Science labs with actual equipment. A library with actual books. Smart classrooms with actual projectors. We invested in what matters.",
+                },
+                {
+                  title: "Transport that reaches your doorstep",
+                  text: "From Talwara to Phagwara, our buses cover 16 routes daily. Distance should not be the reason a student misses a good school.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="border-l-2 border-gold-400/30 pl-6 py-2"
+                >
+                  <h4 className="font-serif text-lg text-white mb-2">
+                    {item.title}
+                  </h4>
+                  <p className="text-sm text-white/50 leading-relaxed">
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Faculty Preview ─────────────────────────
+const faculty = [
+  {
+    name: "Mr. Manoj Kapoor",
+    role: "Director",
+    image: "/images/faculty/manoj-kapoor.png",
+  },
+  {
+    name: "Mr. S.K. Sharma",
+    role: "Principal",
+    image: "/images/faculty/sk-sharma.png",
+  },
+  {
+    name: "Mr. Jairnail Singh",
+    role: "Senior Faculty",
+    image: "/images/faculty/jairnail-singh.png",
+  },
+  {
+    name: "Mr. O.P. Sharma",
+    role: "Senior Faculty",
+    image: "/images/faculty/op-sharma.png",
+  },
+];
+
+function FacultyPreview() {
+  return (
+    <section className="section bg-white">
+      <div className="container-wide">
+        <ScrollReveal>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16">
+            <SectionHeading
+              label="Faculty"
+              title="The people behind the results."
+            />
+            <Link
+              href="/faculty"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-navy-800 uppercase tracking-[0.1em] group shrink-0"
+            >
+              View all faculty
+              <ArrowRight
+                size={14}
+                className="group-hover:translate-x-1 transition-transform"
+              />
+            </Link>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-200">
+          {faculty.map((person, i) => (
+            <ScrollReveal key={person.name} delay={i * 0.1}>
+              <div className="bg-white group">
+                <div className="aspect-[3/4] overflow-hidden">
+                  <img
+                    src={person.image}
+                    alt={person.name}
+                    className="img-editorial group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+                <div className="p-4 md:p-6">
+                  <h4 className="font-serif text-base md:text-lg text-navy-800">
+                    {person.name}
+                  </h4>
+                  <p className="text-xs text-navy-400 uppercase tracking-widest mt-1">
+                    {person.role}
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Testimonials ────────────────────────────
+const testimonials = [
+  {
+    quote:
+      "My son joined in Class VIII. He went from average to topping his boards. The teachers here don't give up on a student.",
+    name: "Rajinder Kaur",
+    relation: "Parent",
+  },
+  {
+    quote:
+      "The science labs at Triple M are better than what I found at many bigger schools in Jalandhar. Real equipment, real experiments.",
+    name: "Dr. Amit Verma",
+    relation: "Parent",
+  },
+  {
+    quote:
+      "I studied here from 2015 to 2019. Prof. Kapoor's physics classes are something I still remember in engineering college.",
+    name: "Priya Sharma",
+    relation: "Alumna, Batch of 2019",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section className="section bg-cream">
+      <div className="container-wide">
+        <ScrollReveal>
+          <SectionHeading
+            label="What they say"
+            title="From the people who know."
+            align="center"
+          />
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-neutral-200 max-w-5xl mx-auto">
+          {testimonials.map((t, i) => (
+            <ScrollReveal key={t.name} delay={i * 0.1}>
+              <div className="bg-white p-8 md:p-10 h-full flex flex-col">
+                <Star size={20} className="text-gold-400 mb-4" fill="currentColor" />
+                <blockquote className="text-[15px] text-navy-700 leading-relaxed flex-1 italic">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <div className="mt-6 pt-4 border-t border-neutral-100">
+                  <span className="font-serif text-sm text-navy-800 block">
+                    {t.name}
+                  </span>
+                  <span className="text-xs text-navy-400">{t.relation}</span>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── CTA Section ─────────────────────────────
+function CTA() {
+  return (
+    <section className="relative py-24 md:py-32 bg-navy-900 overflow-hidden">
+      <div className="absolute inset-0">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920&q=80')",
+          }}
+        />
+      </div>
+      <div className="container-narrow relative text-center">
+        <ScrollReveal>
+          <span className="text-label text-gold-300 block mb-4">
+            Admissions 2025–26
+          </span>
+          <h2 className="font-serif text-display text-white mb-6">
+            The right school makes
+            <br className="hidden md:block" />
+            the difference. You know that.
+          </h2>
+          <p className="text-white/50 text-lg mb-10 max-w-lg mx-auto">
+            Admissions are open for Classes VI through XII. Visit the campus
+            or call us directly.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/admissions" className="btn-gold">
+              Apply Now
+              <ArrowRight size={16} className="ml-2" />
+            </Link>
+            <a
+              href={`tel:${SCHOOL_INFO.phone}`}
+              className="btn-outline border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+            >
+              Call {SCHOOL_INFO.phone}
+            </a>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+// ─── Map Section ─────────────────────────────
+function MapSection() {
+  return (
+    <section className="h-[400px] w-full bg-neutral-200 relative">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.5!2d75.911!3d31.532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391ad5313cce6d27%3A0x7e1dce513b5c9f22!2sTriple+M+Public+School!5e0!3m2!1sen!2sin!4v1"
+        className="w-full h-full border-0"
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="Triple M Public School Location"
+      />
+    </section>
+  );
+}
+
+// ─── Page ────────────────────────────────────
+export default function HomePage() {
+  return (
+    <>
+      <Hero />
+      <AdmissionsTicker />
+      <Welcome />
+      <FacilitiesGrid />
+      <WhyChooseUs />
+      <FacultyPreview />
+      <Testimonials />
+      <CTA />
+      <MapSection />
+    </>
   );
 }
