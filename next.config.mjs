@@ -57,12 +57,17 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              // Next.js requires unsafe-inline for styles; unsafe-eval needed for dev mode HMR
-              "script-src 'self' 'unsafe-inline'",
+              // Next.js dev mode needs unsafe-eval for HMR; production strips it
+              process.env.NODE_ENV === "development"
+                ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+                : "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https://res.cloudinary.com https://images.unsplash.com https://maps.googleapis.com https://maps.gstatic.com",
-              "connect-src 'self' https://res.cloudinary.com",
+              // Dev mode needs ws: for HMR WebSocket
+              process.env.NODE_ENV === "development"
+                ? "connect-src 'self' https://res.cloudinary.com ws://localhost:3001"
+                : "connect-src 'self' https://res.cloudinary.com",
               "frame-src https://www.google.com https://maps.google.com",
               "object-src 'none'",
               "base-uri 'self'",
