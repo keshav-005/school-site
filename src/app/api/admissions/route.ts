@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { AdmissionInquiry } from "@/lib/models";
-import { admissionFormSchema } from "@/lib/validators";
+import { admissionFormSchema, clampPagination } from "@/lib/validators";
 import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 import { sendEmail, admissionEmailTemplate } from "@/lib/email";
 import { auth } from "@/lib/auth";
@@ -84,12 +84,10 @@ export async function GET(request: NextRequest) {
     await connectDB();
 
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "20");
+    const { page, limit, skip } = clampPagination(searchParams);
     const status = searchParams.get("status");
 
     const query = status ? { status } : {};
-    const skip = (page - 1) * limit;
 
     const [inquiries, total] = await Promise.all([
       AdmissionInquiry.find(query)

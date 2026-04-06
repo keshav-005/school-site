@@ -37,7 +37,7 @@ const coreValues = [
 const milestones = [
   { year: "2012", title: "School Founded", desc: "Triple M Public School opens its doors in Hoshiarpur with a mission to deliver quality education." },
   { year: "2014", title: "Secondary Wing Added", desc: "Expanded to offer full Secondary education (Classes VI–X) with state board affiliation." },
-  { year: "2016", title: "Higher Secondary Begins", desc: "Launched Science (Medical & Non-Medical), Arts, and Commerce streams for Classes XI–XII." },
+  { year: "2016", title: "Higher Secondary Begins", desc: "Launched Science (Medical & Non-Medical) and Commerce streams for Classes XI–XII." },
   { year: "2018", title: "Transport Network Expanded", desc: "Grew to 16 bus routes covering Talwara, Mukerian, Dasuya, Tanda, Phagwara, and more." },
   { year: "2020", title: "Smart Classrooms Installed", desc: "Upgraded all classrooms with digital boards, projectors, and AV equipment." },
   { year: "2024", title: "1000+ Alumni Strong", desc: "Over a thousand students have now passed through Triple M and moved on to colleges and careers." },

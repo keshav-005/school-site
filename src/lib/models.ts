@@ -50,7 +50,7 @@ const FacultySchema = new Schema<IFaculty>(
     department: {
       type: String,
       required: true,
-      enum: ["Medical", "Non-Medical", "Arts", "Commerce", "General"],
+      enum: ["Medical", "Non-Medical", "Commerce", "General"],
     },
     subject: { type: String, required: true, trim: true, maxlength: 100 },
     qualifications: { type: String, trim: true, maxlength: 300 },

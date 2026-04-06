@@ -20,7 +20,6 @@ const quickLinks = [
 const academics = [
   { label: "Science (Medical)" },
   { label: "Science (Non-Medical)" },
-  { label: "Arts Stream" },
   { label: "Commerce Stream" },
   { label: "Secondary (VI–X)" },
 ];

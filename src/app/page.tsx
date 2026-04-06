@@ -555,7 +555,7 @@ const toppers = [
   { name: "Amandeep Kaur", stream: "Medical (Class XII)", score: "97.4%", year: "2024", subject: "Top in Biology" },
   { name: "Rohit Sharma",  stream: "Non-Medical (Class XII)", score: "96.8%", year: "2024", subject: "Top in Physics" },
   { name: "Gurpreet Singh", stream: "Commerce (Class XII)",  score: "95.2%", year: "2024", subject: "Top in Accounts" },
-  { name: "Simran Gill",   stream: "Arts (Class XII)",      score: "94.6%", year: "2024", subject: "Top in English" },
+  { name: "Simran Gill",   stream: "Commerce (Class XII)",      score: "94.6%", year: "2024", subject: "Top in English" },
   { name: "Navjot Kaur",  stream: "Class X",               score: "93.8%", year: "2024", subject: "School Topper" },
   { name: "Arjun Thakur", stream: "Non-Medical (Class XII)", score: "93.2%", year: "2023", subject: "District Rank 3" },
 ];

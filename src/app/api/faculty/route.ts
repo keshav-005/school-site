@@ -79,7 +79,7 @@ const devFaculty: any[] = [
   {
     _id: "fac-008",
     name: "Mrs. Sunita Sharma",
-    department: "Arts",
+    department: "General",
     subject: "English",
     qualifications: "M.A. English, B.Ed.",
     photoUrl: "",
@@ -89,7 +89,7 @@ const devFaculty: any[] = [
   {
     _id: "fac-009",
     name: "Mr. Harjeet Singh",
-    department: "Arts",
+    department: "General",
     subject: "Punjabi",
     qualifications: "M.A. Punjabi, B.Ed.",
     photoUrl: "",
@@ -99,7 +99,7 @@ const devFaculty: any[] = [
   {
     _id: "fac-010",
     name: "Mrs. Neelam Rani",
-    department: "Arts",
+    department: "General",
     subject: "Hindi",
     qualifications: "M.A. Hindi, B.Ed.",
     photoUrl: "",

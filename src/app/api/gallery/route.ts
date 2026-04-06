@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { GalleryImage } from "@/lib/models";
-import { galleryImageSchema } from "@/lib/validators";
+import { galleryImageSchema, galleryUpdateSchema, clampPagination } from "@/lib/validators";
 import { auth } from "@/lib/auth";
 
 // ─── Dev-mode in-memory store ────────────────
@@ -111,9 +111,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "50");
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = clampPagination(searchParams);
 
     // Dev mode
     if (!process.env.MONGODB_URI) {
@@ -210,11 +208,21 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { id, ...updates } = body;
+    const { id, ...rawUpdates } = body;
 
     if (!id) {
       return NextResponse.json({ error: "Image ID required" }, { status: 400 });
     }
+
+    // Validate updates through strict schema — rejects unknown fields
+    const parsed = galleryUpdateSchema.safeParse(rawUpdates);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Invalid input", errors: parsed.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+    const updates = parsed.data;
 
     // Dev mode
     if (!process.env.MONGODB_URI) {

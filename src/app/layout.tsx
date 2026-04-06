@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "best school Hoshiarpur",
     "admissions 2025",
     "Class XI XII admissions",
-    "Medical Non-Medical Commerce Arts",
+    "Medical Non-Medical Commerce",
     "school near Talwara",
     "school near Mukerian",
   ],

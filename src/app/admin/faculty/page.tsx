@@ -29,7 +29,7 @@ const sidebarLinks = [
   { label: "Gallery", href: "/admin/gallery", icon: ImageIcon },
 ];
 
-const departments = ["Medical", "Non-Medical", "Arts", "Commerce", "General"];
+const departments = ["Medical", "Non-Medical", "Commerce", "General"];
 
 export default function AdminFacultyPage() {
   const { status } = useSession();

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { ScrollReveal, PageHero } from "@/components/shared";
 
-const departments = ["All", "Medical", "Non-Medical", "Arts", "Commerce", "General"];
+const departments = ["All", "Medical", "Non-Medical", "Commerce", "General"];
 
 export default function FacultyPage() {
   const [activeFilter, setActiveFilter] = useState("All");
