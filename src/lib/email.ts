@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import nodemailer from "nodemailer";
 
 // ─── HTML Escaper ────────────────────────────
@@ -45,8 +46,8 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     const transporter = createTransporter();
 
     if (!transporter) {
-      console.warn("⚠️  SMTP credentials not configured. Email not sent.");
-      console.log("Would have sent email:", {
+      logger.warn("⚠️  SMTP credentials not configured. Email not sent.");
+      logger.info("Would have sent email:", {
         to: options.to,
         subject: options.subject,
       });
@@ -56,7 +57,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     // Validate recipient
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(options.to)) {
-      console.error("❌ Invalid recipient email address:", options.to);
+      logger.error("❌ Invalid recipient email address:", options.to);
       return false;
     }
 
@@ -70,7 +71,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
 
     return true;
   } catch (error) {
-    console.error("❌ Email send error:", error);
+    logger.error("❌ Email send error:", error);
     return false;
   }
 }

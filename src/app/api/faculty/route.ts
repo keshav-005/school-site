@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { Faculty } from "@/lib/models";
@@ -148,7 +149,7 @@ export async function GET() {
       .lean();
     return NextResponse.json({ faculty });
   } catch (error) {
-    console.error("Faculty GET error:", error);
+    logger.error("Faculty GET error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -193,7 +194,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Faculty POST error:", error);
+    logger.error("Faculty POST error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -255,7 +256,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, faculty: member });
   } catch (error) {
-    console.error("Faculty PUT error:", error);
+    logger.error("Faculty PUT error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -312,7 +313,7 @@ export async function DELETE(request: NextRequest) {
       message: "Faculty member removed",
     });
   } catch (error) {
-    console.error("Faculty DELETE error:", error);
+    logger.error("Faculty DELETE error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

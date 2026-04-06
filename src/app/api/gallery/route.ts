@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { GalleryImage } from "@/lib/models";
@@ -150,7 +151,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Gallery GET error:", error);
+    logger.error("Gallery GET error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -192,7 +193,7 @@ export async function POST(request: NextRequest) {
     const image = await GalleryImage.create(parsed.data);
     return NextResponse.json({ success: true, image }, { status: 201 });
   } catch (error) {
-    console.error("Gallery POST error:", error);
+    logger.error("Gallery POST error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -250,7 +251,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true, image });
   } catch (error) {
-    console.error("Gallery PUT error:", error);
+    logger.error("Gallery PUT error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -298,7 +299,7 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Image removed" });
   } catch (error) {
-    console.error("Gallery DELETE error:", error);
+    logger.error("Gallery DELETE error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

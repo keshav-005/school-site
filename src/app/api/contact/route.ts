@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { ContactMessage } from "@/lib/models";
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Contact API error:", error);
+    logger.error("Contact API error:", error);
     return NextResponse.json(
       { error: "Internal server error. Please try again later." },
       { status: 500 }

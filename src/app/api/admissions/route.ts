@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { AdmissionInquiry } from "@/lib/models";
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Admissions API error:", error);
+    logger.error("Admissions API error:", error);
     return NextResponse.json(
       { error: "Internal server error. Please try again later." },
       { status: 500 }
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Admissions GET error:", error);
+    logger.error("Admissions GET error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

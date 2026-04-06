@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import mongoose from "mongoose";
 
 interface MongooseCache {
@@ -38,12 +39,12 @@ export async function connectDB(): Promise<typeof mongoose> {
     cached.promise = mongoose
       .connect(MONGODB_URI, opts)
       .then((mongooseInstance) => {
-        console.log("✅ MongoDB connected successfully");
+        logger.info("✅ MongoDB connected successfully");
         return mongooseInstance;
       })
       .catch((error) => {
         cached.promise = null;
-        console.error("❌ MongoDB connection error:", error);
+        logger.error("❌ MongoDB connection error:", error);
         throw error;
       });
   }
