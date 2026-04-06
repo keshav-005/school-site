@@ -614,6 +614,107 @@ function BoardResults() {
   );
 }
 
+// ─── School Timings & Calendar ──────────────────
+const timings = [
+  { day: "Monday – Friday", time: "8:00 AM – 2:30 PM", note: "Regular classes" },
+  { day: "Saturday",        time: "8:00 AM – 12:30 PM", note: "Classes + activities" },
+  { day: "Sunday",          time: "Closed",             note: "" },
+];
+
+const calendarEvents = [
+  { month: "Apr", event: "New session begins", type: "session" },
+  { month: "Apr", event: "Annual Sports Day",  type: "event" },
+  { month: "May", event: "Unit Test 1",        type: "exam" },
+  { month: "Jun", event: "Summer vacation begins", type: "holiday" },
+  { month: "Jul", event: "School reopens",     type: "session" },
+  { month: "Aug", event: "Independence Day celebration", type: "event" },
+  { month: "Sep", event: "Half-yearly exams",  type: "exam" },
+  { month: "Oct", event: "Diwali break",       type: "holiday" },
+  { month: "Nov", event: "Unit Test 2",        type: "exam" },
+  { month: "Dec", event: "Winter vacation",    type: "holiday" },
+  { month: "Jan", event: "Pre-board exams start", type: "exam" },
+  { month: "Mar", event: "PSEB Board exams",   type: "exam" },
+];
+
+const calTypeStyle: Record<string, string> = {
+  exam:    "bg-red-50 text-red-600 border-red-100",
+  event:   "bg-blue-50 text-blue-600 border-blue-100",
+  session: "bg-emerald-50 text-emerald-600 border-emerald-100",
+  holiday: "bg-gold-50 text-gold-600 border-gold-100",
+};
+
+function SchoolTimings() {
+  return (
+    <section className="section bg-white border-y border-neutral-100">
+      <div className="container-wide">
+        <ScrollReveal>
+          <SectionHeading
+            label="Know Before You Visit"
+            title="Timings & calendar."
+            description="School hours, key dates, and the full academic year at a glance."
+          />
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* Timings */}
+          <ScrollReveal>
+            <div>
+              <h3 className="font-serif text-xl text-navy-800 mb-6 flex items-center gap-2">
+                <Clock size={18} className="text-gold-400" />
+                School Hours
+              </h3>
+              <div className="space-y-px bg-neutral-100">
+                {timings.map((t) => (
+                  <div key={t.day} className="bg-white p-5 flex justify-between items-center">
+                    <div>
+                      <p className="text-sm font-sans font-semibold text-navy-800">{t.day}</p>
+                      {t.note && <p className="text-xs text-navy-400 mt-0.5">{t.note}</p>}
+                    </div>
+                    <span className={`text-sm font-mono font-bold ${
+                      t.time === "Closed" ? "text-red-400" : "text-navy-700"
+                    }`}>{t.time}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 bg-gold-50 border border-gold-200 p-5">
+                <p className="text-sm text-gold-700">
+                  <span className="font-semibold">Gate closes at 8:15 AM.</span> Students arriving after 8:15 AM must report to the office with a parent/guardian.
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Calendar */}
+          <ScrollReveal delay={0.1}>
+            <div>
+              <h3 className="font-serif text-xl text-navy-800 mb-6 flex items-center gap-2">
+                <CalendarDays size={18} className="text-gold-400" />
+                Academic Calendar 2025–26
+              </h3>
+              <div className="grid grid-cols-2 gap-px bg-neutral-100">
+                {calendarEvents.map((ev, i) => (
+                  <div key={i} className={`bg-white p-4 border-l-2 ${calTypeStyle[ev.type]} flex gap-3`}>
+                    <span className="text-[11px] font-bold font-mono w-7 shrink-0 pt-0.5">{ev.month}</span>
+                    <span className="text-xs text-navy-700 leading-snug">{ev.event}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {["exam","event","session","holiday"].map((type) => (
+                  <span key={type} className={`text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-1 border ${calTypeStyle[type]}`}>
+                    {type}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Testimonials ────────────────────────────
 const testimonials = [
   {
@@ -679,8 +780,7 @@ function CTA() {
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920&q=80')",
+            backgroundImage: "url('/images/campus/triple-m-building.png')",
           }}
         />
       </div>
@@ -744,6 +844,7 @@ export default function HomePage() {
       <WhyChooseUs />
       <FacultyPreview />
       <BoardResults />
+      <SchoolTimings />
       <Testimonials />
       <CTA />
       <MapSection />
