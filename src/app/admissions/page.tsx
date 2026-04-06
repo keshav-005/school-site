@@ -12,6 +12,12 @@ import {
   MessageCircle,
   BookOpenCheck,
   AlertCircle,
+  FlaskConical,
+  Calculator,
+  Palette,
+  TrendingUp,
+  BookOpen,
+  ChevronDown,
 } from "lucide-react";
 import { SCHOOL_INFO } from "@/lib/utils";
 
@@ -55,6 +61,228 @@ const classOptions = [
   "Class XII — Medical", "Class XII — Non-Medical",
   "Class XII — Commerce", "Class XII — Arts",
 ];
+
+// ─── Streams Data ─────────────────────────────
+const streams = [
+  {
+    id: "medical",
+    icon: FlaskConical,
+    name: "Medical",
+    classes: "Class XI & XII",
+    color: "emerald",
+    tagline: "For future doctors, pharmacists & life scientists.",
+    subjects: [
+      { name: "Physics", type: "Core" },
+      { name: "Chemistry", type: "Core" },
+      { name: "Biology", type: "Core" },
+      { name: "English", type: "Core" },
+      { name: "Punjabi / Hindi", type: "Core" },
+      { name: "Physical Education", type: "Optional" },
+    ],
+    careers: ["MBBS / BDS", "B.Pharm", "B.Sc Nursing", "Biotechnology", "Veterinary Science"],
+    note: "Best suited for students targeting NEET.",
+  },
+  {
+    id: "nonmedical",
+    icon: Calculator,
+    name: "Non-Medical",
+    classes: "Class XI & XII",
+    color: "blue",
+    tagline: "For future engineers, architects & scientists.",
+    subjects: [
+      { name: "Physics", type: "Core" },
+      { name: "Chemistry", type: "Core" },
+      { name: "Mathematics", type: "Core" },
+      { name: "English", type: "Core" },
+      { name: "Punjabi / Hindi", type: "Core" },
+      { name: "Computer Science", type: "Optional" },
+    ],
+    careers: ["B.Tech / B.E.", "B.Arch", "B.Sc Mathematics", "NDA / CDS", "Data Science"],
+    note: "Best suited for students targeting JEE / CET.",
+  },
+  {
+    id: "commerce",
+    icon: TrendingUp,
+    name: "Commerce",
+    classes: "Class XI & XII",
+    color: "gold",
+    tagline: "For future CAs, bankers & entrepreneurs.",
+    subjects: [
+      { name: "Accountancy", type: "Core" },
+      { name: "Business Studies", type: "Core" },
+      { name: "Economics", type: "Core" },
+      { name: "English", type: "Core" },
+      { name: "Punjabi / Hindi", type: "Core" },
+      { name: "Mathematics", type: "Optional" },
+    ],
+    careers: ["CA / CMA / CS", "BBA / MBA", "B.Com", "Banking & Finance", "Entrepreneurship"],
+    note: "Maths optional strengthens career options in finance.",
+  },
+  {
+    id: "arts",
+    icon: Palette,
+    name: "Arts / Humanities",
+    classes: "Class XI & XII",
+    color: "purple",
+    tagline: "For future lawyers, civil servants & educators.",
+    subjects: [
+      { name: "History", type: "Core" },
+      { name: "Political Science", type: "Core" },
+      { name: "Economics", type: "Core" },
+      { name: "English", type: "Core" },
+      { name: "Punjabi / Hindi", type: "Core" },
+      { name: "Geography / Psychology", type: "Optional" },
+    ],
+    careers: ["IAS / IPS / PCS", "LLB / BA LLB", "Journalism", "Teaching", "Social Work"],
+    note: "Strong foundation for UPSC, law & mass communication.",
+  },
+];
+
+const colorMap: Record<string, { bg: string; border: string; text: string; badge: string; tag: string }> = {
+  emerald: {
+    bg: "hover:bg-emerald-50",
+    border: "border-emerald-200",
+    text: "text-emerald-600",
+    badge: "bg-emerald-600",
+    tag: "bg-emerald-50 text-emerald-700",
+  },
+  blue: {
+    bg: "hover:bg-blue-50",
+    border: "border-blue-200",
+    text: "text-blue-600",
+    badge: "bg-blue-600",
+    tag: "bg-blue-50 text-blue-700",
+  },
+  gold: {
+    bg: "hover:bg-gold-50",
+    border: "border-gold-200",
+    text: "text-gold-600",
+    badge: "bg-gold-500",
+    tag: "bg-gold-50 text-gold-700",
+  },
+  purple: {
+    bg: "hover:bg-purple-50",
+    border: "border-purple-200",
+    text: "text-purple-600",
+    badge: "bg-purple-600",
+    tag: "bg-purple-50 text-purple-700",
+  },
+};
+
+function StreamsSection() {
+  const [open, setOpen] = useState<string | null>(null);
+
+  return (
+    <section className="section bg-white">
+      <div className="container-wide">
+        <ScrollReveal>
+          <SectionHeading
+            label="Streams Available"
+            title="Choose your path."
+            description="Triple M offers all four major streams for Class XI & XII under the PSEB curriculum. Each stream is taught by subject specialists with a focus on board results and competitive exam preparation."
+            align="center"
+          />
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-200">
+          {streams.map((stream, i) => {
+            const colors = colorMap[stream.color];
+            const isOpen = open === stream.id;
+            return (
+              <ScrollReveal key={stream.id} delay={i * 0.08}>
+                <div
+                  className={`bg-white border-0 transition-colors duration-300 ${colors.bg} h-full flex flex-col`}
+                >
+                  {/* Header */}
+                  <div className="p-8 pb-6">
+                    <div className="flex items-start justify-between gap-4 mb-5">
+                      <div className={`w-12 h-12 rounded-sm flex items-center justify-center ${colors.badge}`}>
+                        <stream.icon size={22} className="text-white" strokeWidth={1.5} />
+                      </div>
+                      <span className="text-xs font-sans font-semibold uppercase tracking-[0.15em] text-navy-400 pt-1">
+                        {stream.classes}
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-2xl text-navy-800 mb-1">{stream.name}</h3>
+                    <p className="text-sm text-navy-500 leading-relaxed">{stream.tagline}</p>
+                  </div>
+
+                  {/* Subjects */}
+                  <div className="px-8 pb-2">
+                    <div className="flex items-center gap-2 mb-3">
+                      <BookOpen size={13} className={colors.text} />
+                      <span className="text-[11px] font-sans font-bold uppercase tracking-[0.15em] text-navy-400">Subjects</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {stream.subjects.map((s) => (
+                        <span
+                          key={s.name}
+                          className={`text-xs px-2.5 py-1 font-sans ${
+                            s.type === "Core" ? colors.tag : "bg-neutral-100 text-navy-500"
+                          }`}
+                        >
+                          {s.name}
+                          {s.type === "Optional" && <span className="ml-1 opacity-50">(opt)</span>}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Career paths — expandable */}
+                  <div className="px-8 pb-8 mt-auto">
+                    <button
+                      onClick={() => setOpen(isOpen ? null : stream.id)}
+                      className={`flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-[0.15em] ${colors.text} hover:opacity-80 transition-opacity`}
+                    >
+                      Career paths
+                      <ChevronDown
+                        size={14}
+                        className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <div className="mt-4 space-y-2">
+                        {stream.careers.map((career) => (
+                          <div key={career} className="flex items-center gap-2 text-sm text-navy-600">
+                            <CheckCircle2 size={13} className={colors.text} />
+                            {career}
+                          </div>
+                        ))}
+                        <p className={`text-xs mt-3 pt-3 border-t border-neutral-100 ${colors.text} italic`}>
+                          {stream.note}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })}
+        </div>
+
+        {/* Bottom callout */}
+        <ScrollReveal delay={0.2}>
+          <div className="mt-8 bg-navy-800 p-6 md:p-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <div className="flex-1">
+              <p className="text-white font-serif text-lg">Not sure which stream to choose?</p>
+              <p className="text-white/50 text-sm mt-1">
+                Our counselling team helps students and parents evaluate the right stream based on interest, aptitude, and career goals — free of charge.
+              </p>
+            </div>
+            <a
+              href={`https://wa.me/91${SCHOOL_INFO.phone}?text=I%20need%20guidance%20on%20choosing%20a%20stream%20at%20Triple%20M%20School.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold shrink-0 whitespace-nowrap"
+            >
+              Get Free Counselling
+            </a>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
 
 export default function AdmissionsPage() {
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -131,6 +359,9 @@ export default function AdmissionsPage() {
           </div>
         </div>
       </section>
+
+      {/* Streams */}
+      <StreamsSection />
 
       {/* Registration Form */}
       <section className="section bg-cream" id="register">
