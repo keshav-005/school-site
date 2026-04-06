@@ -179,19 +179,17 @@ interface PageHeroProps {
 
 export function PageHero({ title, subtitle, breadcrumbs }: PageHeroProps) {
   return (
-    <section className="relative bg-navy-800 py-16 md:py-24 overflow-hidden">
-      {/* Subtle geometric pattern */}
-      <div className="absolute inset-0 opacity-[0.04]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(45deg, #fff 25%, transparent 25%), linear-gradient(-45deg, #fff 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #fff 75%), linear-gradient(-45deg, transparent 75%, #fff 75%)",
-            backgroundSize: "40px 40px",
-            backgroundPosition: "0 0, 0 20px, 20px -20px, -20px 0px",
-          }}
-        />
-      </div>
+    <section className="relative bg-navy-950 py-20 md:py-32 overflow-hidden">
+      {/* Real building background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center scale-105"
+        style={{ backgroundImage: "url('/images/campus/triple-m-building.png')" }}
+      />
+      {/* Deep gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-950/80 to-navy-950/60" />
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-navy-950/40 to-transparent" />
+
       <div className="container-wide relative">
         {breadcrumbs && (
           <nav className="flex items-center gap-2 text-xs text-white/40 mb-6 font-sans uppercase tracking-widest">
@@ -222,3 +220,4 @@ export function PageHero({ title, subtitle, breadcrumbs }: PageHeroProps) {
     </section>
   );
 }
+

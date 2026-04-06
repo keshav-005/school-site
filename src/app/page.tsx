@@ -16,6 +16,10 @@ import {
   ArrowRight,
   Star,
   ChevronRight,
+  Bell,
+  Medal,
+  GraduationCap,
+  CalendarDays,
 } from "lucide-react";
 import {
   ScrollReveal,
@@ -139,6 +143,86 @@ function AdmissionsTicker() {
         ))}
       </div>
     </div>
+  );
+}
+
+// ─── Notices Section ─────────────────────────
+const notices = [
+  {
+    date: "Apr 10, 2025",
+    tag: "Exam",
+    text: "Class X & XII Board Practical Examinations begin April 15. Students must carry admit cards.",
+  },
+  {
+    date: "Apr 5, 2025",
+    tag: "Holiday",
+    text: "School closed on April 14 (Baisakhi). Regular classes resume April 15.",
+  },
+  {
+    date: "Mar 28, 2025",
+    tag: "Admissions",
+    text: "Admissions for 2025–26 session now open. Classes VI to XII. Limited seats — apply early.",
+  },
+  {
+    date: "Mar 20, 2025",
+    tag: "Event",
+    text: "Annual Sports Day scheduled for April 25. Students to report in sports uniform.",
+  },
+];
+
+const tagColors: Record<string, string> = {
+  Exam: "bg-red-50 text-red-600",
+  Holiday: "bg-emerald-50 text-emerald-600",
+  Admissions: "bg-gold-50 text-gold-600",
+  Event: "bg-blue-50 text-blue-600",
+};
+
+function NoticesSection() {
+  return (
+    <section className="section bg-cream border-b border-neutral-200">
+      <div className="container-wide">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
+          <ScrollReveal>
+            <div className="lg:sticky lg:top-8">
+              <span className="text-label text-gold-400 block mb-3">Latest Updates</span>
+              <h2 className="font-serif text-heading-lg md:text-display text-navy-800">
+                Notices &
+                <br />Announcements
+              </h2>
+              <div className="divider bg-gold-400 mt-6 mb-6" />
+              <p className="text-navy-500 text-sm leading-relaxed">
+                Stay up to date with exam schedules, holidays, events, and important school communications.
+              </p>
+              <div className="mt-8 flex items-center gap-3 text-navy-400">
+                <Bell size={16} className="text-gold-400" />
+                <span className="text-xs font-sans uppercase tracking-widest">Updated regularly</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <div className="space-y-px bg-neutral-200">
+            {notices.map((notice, i) => (
+              <ScrollReveal key={i} delay={i * 0.08}>
+                <div className="bg-white p-6 md:p-8 flex gap-5 group hover:bg-navy-800 transition-colors duration-500">
+                  <div className="flex flex-col items-center gap-2 shrink-0">
+                    <CalendarDays size={18} className="text-gold-400 group-hover:text-gold-300 transition-colors" />
+                    <span className="text-[10px] font-sans text-navy-400 group-hover:text-white/40 transition-colors text-center leading-tight">{notice.date}</span>
+                  </div>
+                  <div>
+                    <span className={`inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-2 py-0.5 rounded-sm mb-2 ${tagColors[notice.tag] || "bg-neutral-100 text-navy-500"}`}>
+                      {notice.tag}
+                    </span>
+                    <p className="text-sm text-navy-700 leading-relaxed group-hover:text-white/80 transition-colors">
+                      {notice.text}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -466,6 +550,70 @@ function FacultyPreview() {
   );
 }
 
+// ─── Board Results ───────────────────────────
+const toppers = [
+  { name: "Amandeep Kaur", stream: "Medical (Class XII)", score: "97.4%", year: "2024", subject: "Top in Biology" },
+  { name: "Rohit Sharma",  stream: "Non-Medical (Class XII)", score: "96.8%", year: "2024", subject: "Top in Physics" },
+  { name: "Gurpreet Singh", stream: "Commerce (Class XII)",  score: "95.2%", year: "2024", subject: "Top in Accounts" },
+  { name: "Simran Gill",   stream: "Arts (Class XII)",      score: "94.6%", year: "2024", subject: "Top in English" },
+  { name: "Navjot Kaur",  stream: "Class X",               score: "93.8%", year: "2024", subject: "School Topper" },
+  { name: "Arjun Thakur", stream: "Non-Medical (Class XII)", score: "93.2%", year: "2023", subject: "District Rank 3" },
+];
+
+function BoardResults() {
+  return (
+    <section className="section bg-navy-950 relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, #C9A84C 0%, transparent 60%), radial-gradient(circle at 80% 50%, #C9A84C 0%, transparent 60%)" }} />
+
+      <div className="container-wide relative">
+        <ScrollReveal>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 md:mb-16">
+            <div>
+              <span className="text-label text-gold-400 block mb-3">Academic Excellence</span>
+              <h2 className="font-serif text-heading-lg md:text-display text-white">
+                Board Results 2024
+              </h2>
+              <div className="divider bg-gold-400/40 mt-6" />
+            </div>
+            <div className="mt-6 md:mt-0 flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-3">
+              <Trophy size={18} className="text-gold-400" />
+              <span className="text-sm text-white/70 font-sans">95%+ overall pass rate</span>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10">
+          {toppers.map((topper, i) => (
+            <ScrollReveal key={topper.name} delay={i * 0.08}>
+              <div className="bg-navy-900 p-8 group hover:bg-navy-800 transition-colors duration-500 h-full">
+                <div className="flex items-start justify-between mb-4">
+                  <Medal size={22} className="text-gold-400" />
+                  <span className="text-xs font-sans text-white/30 uppercase tracking-widest">{topper.year}</span>
+                </div>
+                <div className="font-serif text-4xl text-gold-300 mb-1">{topper.score}</div>
+                <div className="font-serif text-lg text-white mt-3">{topper.name}</div>
+                <div className="text-sm text-white/50 mt-1">{topper.stream}</div>
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <span className="text-xs text-gold-400 uppercase tracking-[0.15em] font-sans">{topper.subject}</span>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal delay={0.3}>
+          <div className="mt-10 text-center">
+            <p className="text-white/30 text-sm font-sans">
+              Results shown are representative. Actual board results verified with school records.
+            </p>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
 // ─── Testimonials ────────────────────────────
 const testimonials = [
   {
@@ -590,10 +738,12 @@ export default function HomePage() {
     <>
       <Hero />
       <AdmissionsTicker />
+      <NoticesSection />
       <Welcome />
       <FacilitiesGrid />
       <WhyChooseUs />
       <FacultyPreview />
+      <BoardResults />
       <Testimonials />
       <CTA />
       <MapSection />
