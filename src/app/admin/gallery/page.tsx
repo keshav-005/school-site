@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import type { GalleryImage } from "@/lib/types";
 import {
   GraduationCap,
   LayoutDashboard,
@@ -105,7 +106,7 @@ export default function AdminGalleryPage() {
     }
   }
 
-  function startEdit(img: any) {
+  function startEdit(img: GalleryImage) {
     setEditingId(img._id);
     setEditForm({ url: img.url, caption: img.caption || "", category: img.category });
   }
@@ -372,7 +373,7 @@ export default function AdminGalleryPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map((img: any) => (
+            {filtered.map((img: GalleryImage) => (
               <div
                 key={img._id}
                 className="relative group bg-neutral-100 aspect-square overflow-hidden"

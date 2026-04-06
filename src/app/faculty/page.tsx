@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { ScrollReveal, PageHero } from "@/components/shared";
+import { DEPARTMENTS, getInitials } from "@/lib/types";
+import type { FacultyMember, FacultyListResponse } from "@/lib/types";
 
-const departments = ["All", "Medical", "Non-Medical", "Commerce", "General"];
+const departmentFilters = ["All", ...DEPARTMENTS];
 
 export default function FacultyPage() {
   const [activeFilter, setActiveFilter] = useState("All");
-  const [faculty, setFaculty] = useState<any[]>([]);
+  const [faculty, setFaculty] = useState<FacultyMember[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadFaculty() {
       try {
         const res = await fetch("/api/faculty");
-        const data = await res.json();
+        const data: FacultyListResponse = await res.json();
         setFaculty(data.faculty || []);
       } catch {
         setFaculty([]);
@@ -28,7 +30,7 @@ export default function FacultyPage() {
   const filtered =
     activeFilter === "All"
       ? faculty
-      : faculty.filter((f: any) => f.department === activeFilter);
+      : faculty.filter((f) => f.department === activeFilter);
 
   return (
     <>
@@ -46,7 +48,7 @@ export default function FacultyPage() {
           {/* Filter Tabs */}
           <ScrollReveal>
             <div className="flex flex-wrap gap-2 mb-12 md:mb-16">
-              {departments.map((dept) => (
+              {departmentFilters.map((dept) => (
                 <button
                   key={dept}
                   onClick={() => setActiveFilter(dept)}
@@ -71,8 +73,8 @@ export default function FacultyPage() {
             <>
               {/* Faculty Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-200">
-                {filtered.map((person: any, i: number) => (
-                  <ScrollReveal key={person._id || person.name} delay={i * 0.06}>
+                {filtered.map((person, i) => (
+                  <ScrollReveal key={person._id} delay={i * 0.06}>
                     <div className="bg-white group">
                       <div className="aspect-[3/4] overflow-hidden bg-neutral-100">
                         {person.photoUrl ? (
@@ -84,13 +86,7 @@ export default function FacultyPage() {
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-navy-800">
                             <span className="text-5xl font-serif font-bold text-gold-300 select-none">
-                              {person.name
-                                .replace(/^(Mr\.|Mrs\.|Ms\.|Dr\.|Prof\.)\s*/i, "")
-                                .split(" ")
-                                .map((w: string) => w[0])
-                                .filter(Boolean)
-                                .slice(0, 2)
-                                .join("")}
+                              {getInitials(person.name)}
                             </span>
                           </div>
                         )}

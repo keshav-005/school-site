@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import type { AdmissionInquiry } from "@/lib/types";
 import {
   GraduationCap,
   LayoutDashboard,
@@ -37,7 +38,7 @@ export default function AdminAdmissionsPage() {
   const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [inquiries, setInquiries] = useState<any[]>([]);
+  const [inquiries, setInquiries] = useState<AdmissionInquiry[]>([]);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/admin/login");
@@ -137,7 +138,7 @@ export default function AdminAdmissionsPage() {
                 </tr>
               </thead>
               <tbody>
-                {inquiries.map((inq: any) => (
+                {inquiries.map((inq) => (
                   <tr key={inq._id} className="border-b border-neutral-50 hover:bg-neutral-50">
                     <td className="px-6 py-4 text-sm text-navy-800 font-medium">{inq.studentName}</td>
                     <td className="px-6 py-4 text-sm text-navy-500">{inq.classApplying}</td>

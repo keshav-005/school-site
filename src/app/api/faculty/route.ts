@@ -3,9 +3,10 @@ import { connectDB } from "@/lib/db";
 import { Faculty } from "@/lib/models";
 import { facultySchema } from "@/lib/validators";
 import { auth } from "@/lib/auth";
+import type { FacultyMember } from "@/lib/types";
 
 // ─── Dev-mode in-memory store ────────────────
-const devFaculty: any[] = [
+const devFaculty: FacultyMember[] = [
   {
     _id: "fac-001",
     name: "Mr. Manoj Kapoor",

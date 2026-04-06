@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import type { FacultyMember } from "@/lib/types";
 import {
   GraduationCap,
   LayoutDashboard,
@@ -35,7 +36,7 @@ export default function AdminFacultyPage() {
   const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [faculty, setFaculty] = useState<any[]>([]);
+  const [faculty, setFaculty] = useState<FacultyMember[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -102,7 +103,7 @@ export default function AdminFacultyPage() {
     }
   }
 
-  function startEdit(f: any) {
+  function startEdit(f: FacultyMember) {
     setEditingId(f._id);
     setEditForm({
       name: f.name,
@@ -412,7 +413,7 @@ export default function AdminFacultyPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filtered.map((f: any) => (
+            {filtered.map((f: FacultyMember) => (
               <div key={f._id} className="bg-white border border-neutral-200 overflow-hidden group">
                 {/* Photo */}
                 <div className="aspect-square bg-neutral-100 relative overflow-hidden">

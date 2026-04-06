@@ -3,9 +3,10 @@ import { connectDB } from "@/lib/db";
 import { GalleryImage } from "@/lib/models";
 import { galleryImageSchema, galleryUpdateSchema, clampPagination } from "@/lib/validators";
 import { auth } from "@/lib/auth";
+import type { GalleryImage as GalleryImageType } from "@/lib/types";
 
 // ─── Dev-mode in-memory store ────────────────
-const devGallery: any[] = [
+const devGallery: GalleryImageType[] = [
   {
     _id: "gal-001",
     url: "/images/campus/triple-m-building.png",

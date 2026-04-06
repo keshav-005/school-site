@@ -1,23 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ScrollReveal, PageHero } from "@/components/shared";
-import { X, ZoomIn, Loader2 } from "lucide-react";
+import { X, ZoomIn, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { GALLERY_CATEGORIES } from "@/lib/types";
+import type { GalleryImage, GalleryListResponse } from "@/lib/types";
 
-const categories = ["All", "Campus", "Events", "Sports", "Academics"];
+const categoryFilters = ["All", ...GALLERY_CATEGORIES];
 
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [lightbox, setLightbox] = useState<number | null>(null);
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadGallery() {
       try {
         const res = await fetch("/api/gallery");
-        const data = await res.json();
+        const data: GalleryListResponse = await res.json();
         setImages(data.images || []);
       } catch {
         setImages([]);
@@ -31,10 +33,28 @@ export default function GalleryPage() {
   const filtered =
     activeFilter === "All"
       ? images
-      : images.filter((img: any) => img.category === activeFilter);
+      : images.filter((img) => img.category === activeFilter);
 
   const openLightbox = (i: number) => setLightbox(i);
   const closeLightbox = () => setLightbox(null);
+
+  // Keyboard navigation for lightbox
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (lightbox === null) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight" && lightbox < filtered.length - 1)
+        setLightbox(lightbox + 1);
+      if (e.key === "ArrowLeft" && lightbox > 0)
+        setLightbox(lightbox - 1);
+    },
+    [lightbox, filtered.length]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
     <>
@@ -52,7 +72,7 @@ export default function GalleryPage() {
           {/* Filter */}
           <ScrollReveal>
             <div className="flex flex-wrap gap-2 mb-12">
-              {categories.map((cat) => (
+              {categoryFilters.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
@@ -77,22 +97,26 @@ export default function GalleryPage() {
             <>
               {/* Grid — editorial masonry-style with varying sizes */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-neutral-200">
-                {filtered.map((img: any, i: number) => {
-                  // Alternate between regular and tall items for visual interest
+                {filtered.map((img, i) => {
                   const isTall = i % 5 === 0 || i % 7 === 0;
                   return (
                     <ScrollReveal
-                      key={img._id || img.url + i}
+                      key={img._id}
                       delay={i * 0.04}
                       className={isTall ? "row-span-2" : ""}
                     >
                       <div
                         className="relative bg-neutral-100 overflow-hidden group cursor-pointer h-full"
                         onClick={() => openLightbox(i)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`View ${img.caption || "gallery image"}`}
+                        onKeyDown={(e) => e.key === "Enter" && openLightbox(i)}
                       >
                         <img
                           src={img.url}
-                          alt={img.caption}
+                          alt={img.caption || "Gallery image"}
+                          loading="lazy"
                           className="img-editorial h-full min-h-[200px] group-hover:scale-105 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-navy-950/0 group-hover:bg-navy-950/50 transition-colors duration-300 flex items-end">
@@ -129,6 +153,9 @@ export default function GalleryPage() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-navy-950/95 flex items-center justify-center p-4"
             onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image lightbox"
           >
             <button
               onClick={closeLightbox}
@@ -137,6 +164,27 @@ export default function GalleryPage() {
             >
               <X size={28} />
             </button>
+
+            {/* Prev/Next buttons */}
+            {lightbox > 0 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox - 1); }}
+                className="absolute left-6 top-1/2 -translate-y-1/2 text-white/40 hover:text-white p-2 z-10"
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={36} />
+              </button>
+            )}
+            {lightbox < filtered.length - 1 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightbox(lightbox + 1); }}
+                className="absolute right-6 top-1/2 -translate-y-1/2 text-white/40 hover:text-white p-2 z-10"
+                aria-label="Next image"
+              >
+                <ChevronRight size={36} />
+              </button>
+            )}
+
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -146,11 +194,14 @@ export default function GalleryPage() {
             >
               <img
                 src={filtered[lightbox]?.url}
-                alt={filtered[lightbox]?.caption}
+                alt={filtered[lightbox]?.caption || "Gallery image"}
                 className="w-full h-full object-contain"
               />
               <div className="mt-4 text-center">
                 <p className="text-white text-sm">{filtered[lightbox]?.caption}</p>
+                <p className="text-white/40 text-xs mt-1">
+                  {lightbox + 1} / {filtered.length}
+                </p>
               </div>
             </motion.div>
           </motion.div>
