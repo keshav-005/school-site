@@ -122,7 +122,6 @@ const jsonLd = {
       { "@type": "Offer", itemOffered: { "@type": "Course", name: "Higher Secondary — Medical (Class XI–XII)" } },
       { "@type": "Offer", itemOffered: { "@type": "Course", name: "Higher Secondary — Non-Medical (Class XI–XII)" } },
       { "@type": "Offer", itemOffered: { "@type": "Course", name: "Higher Secondary — Commerce (Class XI–XII)" } },
-      { "@type": "Offer", itemOffered: { "@type": "Course", name: "Higher Secondary — Arts (Class XI–XII)" } },
     ],
   },
 };

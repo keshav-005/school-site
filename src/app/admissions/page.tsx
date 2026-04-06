@@ -14,7 +14,6 @@ import {
   AlertCircle,
   FlaskConical,
   Calculator,
-  Palette,
   TrendingUp,
   BookOpen,
   ChevronDown,
@@ -57,9 +56,9 @@ const documents = [
 const classOptions = [
   "Class VI", "Class VII", "Class VIII", "Class IX", "Class X",
   "Class XI — Medical", "Class XI — Non-Medical",
-  "Class XI — Commerce", "Class XI — Arts",
+  "Class XI — Commerce",
   "Class XII — Medical", "Class XII — Non-Medical",
-  "Class XII — Commerce", "Class XII — Arts",
+  "Class XII — Commerce",
 ];
 
 // ─── Streams Data ─────────────────────────────
@@ -118,24 +117,6 @@ const streams = [
     careers: ["CA / CMA / CS", "BBA / MBA", "B.Com", "Banking & Finance", "Entrepreneurship"],
     note: "Maths optional strengthens career options in finance.",
   },
-  {
-    id: "arts",
-    icon: Palette,
-    name: "Arts / Humanities",
-    classes: "Class XI & XII",
-    color: "purple",
-    tagline: "For future lawyers, civil servants & educators.",
-    subjects: [
-      { name: "History", type: "Core" },
-      { name: "Political Science", type: "Core" },
-      { name: "Economics", type: "Core" },
-      { name: "English", type: "Core" },
-      { name: "Punjabi / Hindi", type: "Core" },
-      { name: "Geography / Psychology", type: "Optional" },
-    ],
-    careers: ["IAS / IPS / PCS", "LLB / BA LLB", "Journalism", "Teaching", "Social Work"],
-    note: "Strong foundation for UPSC, law & mass communication.",
-  },
 ];
 
 const colorMap: Record<string, { bg: string; border: string; text: string; badge: string; tag: string }> = {
@@ -159,13 +140,6 @@ const colorMap: Record<string, { bg: string; border: string; text: string; badge
     text: "text-gold-600",
     badge: "bg-gold-500",
     tag: "bg-gold-50 text-gold-700",
-  },
-  purple: {
-    bg: "hover:bg-purple-50",
-    border: "border-purple-200",
-    text: "text-purple-600",
-    badge: "bg-purple-600",
-    tag: "bg-purple-50 text-purple-700",
   },
 };
 
