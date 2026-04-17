@@ -27,6 +27,7 @@ import {
   SectionHeading,
 } from "@/components/shared";
 import { SCHOOL_INFO } from "@/lib/utils";
+import { SCHOOL_STATS } from "@/lib/types";
 
 // ─── Hero ────────────────────────────────────
 function Hero() {
@@ -101,10 +102,10 @@ function Hero() {
           className="mt-16 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12"
         >
           {[
-            { value: 13, suffix: "+", label: "Years" },
-            { value: 1000, suffix: "+", label: "Students Taught" },
-            { value: 50, suffix: "+", label: "Faculty Members" },
-            { value: 16, suffix: "", label: "Transport Routes" },
+            { value: SCHOOL_STATS.YEARS_RUNNING, suffix: "+", label: "Years" },
+            { value: SCHOOL_STATS.STUDENTS_TAUGHT, suffix: "+", label: "Students Taught" },
+            { value: SCHOOL_STATS.FACULTY_COUNT, suffix: "+", label: "Faculty Members" },
+            { value: SCHOOL_STATS.TRANSPORT_ROUTES, suffix: "", label: "Transport Routes" },
           ].map((stat) => (
             <div key={stat.label}>
               <span className="font-serif text-3xl md:text-4xl text-white block">
@@ -391,25 +392,25 @@ function WhyChooseUs() {
                 {[
                   {
                     icon: Users,
-                    value: 50,
+                    value: SCHOOL_STATS.FACULTY_COUNT,
                     suffix: "+",
                     label: "Experienced Faculty",
                   },
                   {
                     icon: Trophy,
-                    value: 95,
+                    value: SCHOOL_STATS.PASS_RATE,
                     suffix: "%",
                     label: "Pass Rate",
                   },
                   {
                     icon: BookOpen,
-                    value: 5,
+                    value: SCHOOL_STATS.ACADEMIC_STREAMS,
                     suffix: "",
                     label: "Academic Streams",
                   },
                   {
                     icon: Clock,
-                    value: 13,
+                    value: SCHOOL_STATS.YEARS_RUNNING,
                     suffix: "+",
                     label: "Years Running",
                   },

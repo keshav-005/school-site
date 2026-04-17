@@ -112,3 +112,17 @@ export function getInitials(name: string): string {
     .slice(0, 2)
     .join("");
 }
+
+// ─── School Statistics (Single Source of Truth) ─
+// Use these everywhere stats are displayed to prevent
+// conflicting numbers across pages.
+export const SCHOOL_STATS = {
+  FOUNDED_YEAR: 2012,
+  YEARS_RUNNING: 14,
+  FACULTY_COUNT: 50,
+  STUDENTS_TAUGHT: 1000,
+  TRANSPORT_ROUTES: 16,
+  PASS_RATE: 95,
+  ACADEMIC_STREAMS: 3,
+} as const;
+
